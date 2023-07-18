@@ -14,21 +14,27 @@ public class TestOrden {
 		// PRODUCTOS
 		Item producto1 = new Item();
 		producto1.nombre = "mate";
-		producto1.precio = 3.25;
+		producto1.setPrecio(3.25);
+		
+		Item producto2 = new Item("cafe", 2.25);
+		System.out.println(producto2.nombre + " ESTO ES PRODUCTO 2 ");
 		
 		// ORDENES DE PRODUCTO
 		Orden orden1 = new Orden();
-		orden1.nombre = "Sonic";
+		orden1.setNombre("Sonic");
 		
 		//Aplicar el producto1 a la orden1
-		orden1.items.add(producto1);
-		orden1.total = orden1.total + producto1.precio;
-		orden1.listo = true;
+		orden1.agregarItem(producto1);
+//		orden1.total = orden1.total + producto1.getPrecio();
+		orden1.setTotal(producto1.getPrecio());
+//		orden1.listo = true;
 		
 		//TEST INFORMACION DE PRODUCTOS Y ORDEN DE PRODUCTOS
-		System.out.printf("Nombre: %s\n", orden1.nombre);
-		System.out.printf("Total: %s\n", orden1.total);
-		System.out.printf("Listo: %s\n", orden1.listo);
+//		System.out.printf("Nombre: %s\n", orden1.nombre);
+//		System.out.printf("Total: %s\n", orden1.total);
+//		System.out.printf("Listo: %s\n", orden1.listo);
+//		
+		
 		
 		
 		
