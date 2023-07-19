@@ -15,7 +15,7 @@ public class Orden {
 	public Orden() {
 		this.nombre = "No Identificado";
 		this.items = new ArrayList<Item>();
-		
+	
 	}
 	
 	// SOBRECARGA DE CONSTRUCTOR
@@ -26,13 +26,34 @@ public class Orden {
 	//METODOS PROPIOS
 	public void agregarItem(Item item) {
 		this.items.add(item);
+		
+		// una vez que agregemos un item, sumalo al total de la orden
+//		this.total += item.getPrecio();
 	}
 	
 	public void desplegarInfo() {
-		// debemos iterar sobre el arraylist
-		//System.out.printf("Nombre: %s\n", orden1.nombre);
-//		System.out.printf("Total: %s\n", orden1.total);
-//		System.out.printf("Listo: %s\n", orden1.listo);
+		System.out.println(" Nombre Cliente: " + this.nombre);
+		for(Item item : this.items ) {
+			System.out.println(item.getNombre() + " "+ item.getPrecio());
+		}
+		System.out.println("Total compra: " + getTotalOrden() );
+//		System.out.println("Total compra: " + getTotal() );
+	}
+	
+	
+	public double getTotalOrden() {
+		double total = 0;
+		for(Item item : this.items) {
+			total += item.getPrecio();
+			}
+		return total;
+	}
+	
+	public String getStatusOrden() {
+		if(this.listo) {
+			return "Tu orden esta lista";
+		}
+		return "Gracias por tu espera, tu orden estara lista en unos minutos";
 	}
 	
 	
@@ -57,7 +78,7 @@ public class Orden {
 		return listo;
 	}
 
-	public void setListo(boolean listo) {
+	public void setListo(boolean listo ) {
 		this.listo = listo;
 	}
 

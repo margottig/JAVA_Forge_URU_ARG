@@ -17,7 +17,7 @@ public class TestOrden {
 		producto1.setPrecio(3.25);
 		
 		Item producto2 = new Item("cafe", 2.25);
-		System.out.println(producto2.nombre + " ESTO ES PRODUCTO 2 ");
+//		System.out.println(producto2.nombre + " ESTO ES PRODUCTO 2 ");
 		
 		// ORDENES DE PRODUCTO
 		Orden orden1 = new Orden();
@@ -25,9 +25,20 @@ public class TestOrden {
 		
 		//Aplicar el producto1 a la orden1
 		orden1.agregarItem(producto1);
+		System.out.println(orden1.getTotal());
+		orden1.desplegarInfo();
+		String mensajeOrden = orden1.getStatusOrden();	
+		System.out.println(mensajeOrden);
+		orden1.setListo(true);
+		System.out.println(orden1.getStatusOrden());
+		
+		
+		
 //		orden1.total = orden1.total + producto1.getPrecio();
 		orden1.setTotal(producto1.getPrecio());
 //		orden1.listo = true;
+		
+		
 		
 		//TEST INFORMACION DE PRODUCTOS Y ORDEN DE PRODUCTOS
 //		System.out.printf("Nombre: %s\n", orden1.nombre);
