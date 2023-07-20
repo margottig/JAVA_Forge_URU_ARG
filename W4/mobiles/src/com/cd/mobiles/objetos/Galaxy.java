@@ -1,8 +1,9 @@
 package com.cd.mobiles.objetos;
 
+import com.cd.mobiles.interfaces.Sonido;
 import com.cd.mobiles.telefono.Telefono;
 
-public class Galaxy extends Telefono {
+public class Galaxy extends Telefono implements Sonido{
 	
 	//NO TIENE VARIABLES MIEMBRO
 
@@ -12,19 +13,28 @@ public class Galaxy extends Telefono {
 		
 	}
 	
+	//POLIMORFISMO FUERTE
 	public void desplegarInfo() {
-		
-		// metodo clase maestra
-		super.desplegarInfo();
-		System.out.println("Numero Serie: " + this.getNumeroSerie()+  " " + "RingTone: " + this.getRingTone());
+		//metodo clase maestra
+		super.desplegarInfo("SALUDOS");
+		System.out.println("Modelo: " + this.getNumeroSerie() + " "+"Porcentaje Bateria: "+ this.getPorcentajeBateria());
+	}
+	
+	public void metodoPrueba() {};
+	
+	
+	//Implementar metodos desde la interfaz de Sonido
+	@Override
+	public String ring() {
+		return this.getRingTone();
+	}
+	@Override
+	public String desbloquear() {
+		return "Desbloqueo galaxy a traves de huella dactilar";
 	}
 	
 	
 	
 	
 	
-	
-	
-	
-
 }
