@@ -56,6 +56,14 @@ public class BookModel {
 		this.language = lang;
 		this.numberOfPages = pages;
 	}
+	
+	public BookModel(Long id, String title, String desc, String lang, int pages) {
+		this.id = id;
+		this.title = title;
+		this.description = desc;
+		this.language = lang;
+		this.numberOfPages = pages;
+	}
 
 	// Otros getters y setters fueron removidos para resumir
 	public Long getId() {
