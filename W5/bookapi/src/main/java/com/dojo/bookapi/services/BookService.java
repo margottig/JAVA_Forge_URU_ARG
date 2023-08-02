@@ -74,11 +74,6 @@ public class BookService {
     }
     
     
-    
-    
-    
-    
-    
     //Borrar un Registro
     public void borrarRegistro(Long id) {
     	bookrepo.deleteById(id);

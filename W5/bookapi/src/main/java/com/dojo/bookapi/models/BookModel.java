@@ -28,7 +28,7 @@ public class BookModel {
 	private String title;
 
 	@NotBlank(message = "Por favor agrega una descripcion")
-	@Size(min = 5)
+	@Size(min = 5, message="Minimo 5 caracteres")
 	@Column(columnDefinition = "TEXT")
 	private String description;
 

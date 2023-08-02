@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Crea tu libro</title>
+<title>Editar Libro</title>
 <!-- BOOTSTRAP  -->
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -23,31 +23,31 @@
 </head>
 <body>
 
-	<h1>New Book</h1>
-	<form:form action="/books" method="post" modelAttribute="libro">
-		<div class="mb-3">
-			<form:label class="form-label" path="title">Title</form:label>
+	<h1>Editar Libro</h1>
+	<form:form action="/books/${libro.id}" method="post" modelAttribute="libro">
+		<input type="hidden" name="_method" value="put" >
+		<div>
+			<form:label path="title">Title</form:label>
 			<form:errors class="text-danger" path="title" />
-			<form:input class="form-control" path="title" />
+			<form:input path="title" />
 		</div>
-		<div class="mb-3">
-			<form:label class="form-label" path="description">Description</form:label>
-			<form:errors class="text-danger"  path="description" />
-			<form:textarea class="form-control" path="description" />
+		<div>
+			<form:label path="description">Description</form:label>
+			<form:errors class="text-danger" path="description" />
+			<form:textarea path="description" />
 		</div>
-		<div class="mb-3">
-			<form:label class="form-label" path="language">Language</form:label>
+		<div>
+			<form:label path="language">Language</form:label>
 			<form:errors class="text-danger" path="language" />
-			<form:input class="form-control" path="language" />
+			<form:input path="language" />
 		</div>
-		<div class="mb-3">
-			<form:label class="form-label" path="numberOfPages">Pages</form:label>
+		<div>
+			<form:label path="numberOfPages">Pages</form:label>
 			<form:errors class="text-danger" path="numberOfPages" />
-			<form:input  class="form-control" type="number" path="numberOfPages" />
+			<form:input type="number" path="numberOfPages" />
 		</div>
 		<input type="submit" value="Submit" />
 	</form:form>
-
 
 </body>
 </html>
