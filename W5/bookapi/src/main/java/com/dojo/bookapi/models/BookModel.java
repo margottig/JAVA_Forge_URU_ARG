@@ -24,7 +24,7 @@ public class BookModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Size(min = 5, max = 200)
+	@Size(min = 5, max = 200, message="Agrega un titulo por favor")
 	private String title;
 
 	@NotBlank(message = "Por favor agrega una descripcion")
