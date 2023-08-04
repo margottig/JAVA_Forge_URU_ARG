@@ -1,5 +1,6 @@
 package com.dojo.licencias.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,6 +16,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -26,8 +28,9 @@ public class Licencia {
 	private Long id;
 	
 //	@NotBlank
-	private String number;
+	private Integer number;
 	
+	@Future(message="La fecha de expiracion deberia ser posterior a la actual")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date expirationDate;
 	
@@ -55,16 +58,20 @@ public class Licencia {
 		this.id = id;
 	}
 
-	public String getNumber() {
+	public Integer getNumber() {
 		return number;
 	}
 
-	public void setNumber(String number) {
+	public void setNumber(Integer number) {
 		this.number = number;
 	}
 
 	public Date getExpirationDate() {
 		return expirationDate;
+	}
+	public String getFechaExpiracionFormateada() {
+		SimpleDateFormat fechaFormateada = new SimpleDateFormat("MM/dd/yyyy");
+		return fechaFormateada.format(this.expirationDate);
 	}
 
 	public void setExpirationDate(Date expirationDate) {
@@ -112,5 +119,14 @@ public class Licencia {
 	protected void updatedAt() {
 		this.updatedAt = new Date();
 	}
-
+	
+	//metodo para retornar numero concatenado con 000
+	public String getNumberComoString() {
+		int numeroCeros = 5 - String.valueOf(this.number).length();
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i=0; i<numeroCeros; i++) {
+			stringBuilder.append('0');
+		}
+		return String.format("%s%d", stringBuilder, this.number);
+	}
 }

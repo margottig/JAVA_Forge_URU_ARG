@@ -33,6 +33,7 @@ public class MainService {
 	
 	//SERVICIOS PARA LICENCIA
 	public Licencia crearLicencia(Licencia licencia) {
+		licencia.setNumber(this.generarNumerLic());
 		return licenciaRepo.save(licencia);
 	}
 	
@@ -41,9 +42,17 @@ public class MainService {
 //		return personaRepo.encontrarNoLic();
 	}
 	
+	
 	//Metodo para generar numero de licencia
-//	public int generarNumerLic() {
-//		Licencia lic = 
-//	}
+	public int generarNumerLic() {
+		Licencia lic = licenciaRepo.findTopByOrderByNumberDesc();
+		if(lic ==null) {
+			return 1;
+		}
+		int numeroMayorLicencia = lic.getNumber();
+		numeroMayorLicencia++;
+		return numeroMayorLicencia;
+		
+	}
 
 }

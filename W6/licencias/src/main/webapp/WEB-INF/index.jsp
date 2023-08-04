@@ -27,21 +27,26 @@
 	<a href="/persons/new"> Agrega una nueva persona</a>
 	<a href="/licencias/new">Agrega una nueva licencia</a>
 
-	<table class="tabletable-hover">
+	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th>Nombre</th>
 				<th>Numero Licencia</th>
+				<th>Fecha Expiracion</th>
 			</tr>
 
 		</thead>
 		<tbody>
-		<c:forEach items="${todos }" var="persona">
-		<tr>
-			<td> ${persona.firstName } ${persona.lastName }</td>
-			<td> ${persona.getLicencia().getNumber() }</td>
-		</tr>
-		</c:forEach>
+			<c:forEach items="${todos }" var="persona">
+				<tr>
+					<td>${persona.firstName } ${persona.lastName }</td>
+					<%-- 			<td> ${persona.getLicencia().getNumber() }</td> --%>
+					<td>${persona.getLicencia().getNumberComoString() }</td>
+					<%-- 			<td> ${persona.getLicencia().getFechaExpiracionFormateada() }</td> --%>
+					<td><fmt:formatDate pattern="MM/dd/yyy"
+							value="${persona.getLicencia().getExpirationDate()}" /></td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 
