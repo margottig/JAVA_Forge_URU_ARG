@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dojo.licencias.models.Licencia;
 import com.dojo.licencias.models.Persona;
 import com.dojo.licencias.repositories.LicenciaRepo;
 import com.dojo.licencias.repositories.PersonaRepo;
@@ -30,5 +31,19 @@ public class MainService {
 	}
 	
 	
+	//SERVICIOS PARA LICENCIA
+	public Licencia crearLicencia(Licencia licencia) {
+		return licenciaRepo.save(licencia);
+	}
+	
+	public List<Persona> obtenerPersonasSinLic(){
+		return personaRepo.findByLicenciaIdIsNull();
+//		return personaRepo.encontrarNoLic();
+	}
+	
+	//Metodo para generar numero de licencia
+//	public int generarNumerLic() {
+//		Licencia lic = 
+//	}
 
 }

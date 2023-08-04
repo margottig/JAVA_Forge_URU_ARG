@@ -23,32 +23,36 @@
 </head>
 <body>
 
-	<h2>Nueva Persona</h2>
-	<form:form action="/licencias/new" method="POST"
-		modelAttribute="licencia">
-		<div class="form-group">
-			<form:select class="form-control" path="persona">
-				<c:forEach items="${personas }" var="p">
-					<form:option value="${p.id }">${p.firstName } ${p.lastName }</form:option>
+	<div class="container mx-auto">
+		<h2>Nueva Licencia</h2>
+		<form:form action="/licencias/new" method="POST"
+			modelAttribute="licencia">
+			<div class="form-group">
+			<form:label class="form-label" path="persona">Persona: </form:label>
+				<form:select class="form-control" path="persona">
+					<c:forEach items="${personas }" var="p">
+						<form:option value="${p.id }">${p.firstName } ${p.lastName }</form:option>
 
-				</c:forEach>
+					</c:forEach>
 
-			</form:select>
+				</form:select>
 
-		</div>
-		<div class="form-group">
-			<form:label class="form-label" path="state">Estado Pais: </form:label>
-			<form:errors class="text-danger" path="state" />
-			<form:input type="text" class="form-control" path="state" />
-		</div>
-		<div class="form-group">
-			<form:label class="form-label" path="expirationDate">Fecha Expiracion :</form:label>
-			<form:errors class="text-danger" path="expirationDate" />
-			<form:input type="date" class="form-control" path="expirationDate" />
-		</div>
-		<button class="btn btn-success">Crear Licencia</button>
-	</form:form>
+			</div>
+			<div class="form-group">
+				<form:label class="form-label" path="state">Estado Pais: </form:label>
+				<form:errors class="text-danger" path="state" />
+				<form:input type="text" class="form-control" path="state" />
+			</div>
+			<div class="form-group">
+				<form:label class="form-label" path="expirationDate">Fecha Expiracion :</form:label>
+				<form:errors class="text-danger" path="expirationDate" />
+				<form:input type="date" class="form-control" path="expirationDate" />
+			</div>
+			<button class="btn btn-success">Crear Licencia</button>
+		</form:form>
 	</div>
+	
+
 
 </body>
 </html>

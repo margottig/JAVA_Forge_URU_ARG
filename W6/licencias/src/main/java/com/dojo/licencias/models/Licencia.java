@@ -25,14 +25,15 @@ public class Licencia {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank
+//	@NotBlank
 	private String number;
 	
-	@NotBlank
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date expirationDate;
-	@NotBlank
+	
+	@NotBlank(message="Por favor agrega un estado de pais")
 	private String state;
+	
 	@Column(updatable = false)
 	private Date createdAt;
 	private Date updatedAt;
