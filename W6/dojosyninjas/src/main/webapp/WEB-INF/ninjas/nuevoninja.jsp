@@ -23,9 +23,9 @@
 </head>
 <body>
 
-<div class="container mx-auto">
+<div class="container mx-auto col-3">
 		<h1>Nueva Ninja</h1>
-		<form:form action="/ninja/new" method="POST" modelAttribute="ninja">
+		<form:form action="/ninja/new" method="POST" modelAttribute="ninjaform">
 			<div class="form-group">
 			<form:label class="form-label" path="dojo">Seleccionar Dojo: </form:label>
 				<form:select class="form-control" path="dojo">
@@ -45,10 +45,10 @@
 			<div class="form-group">
 				<form:label class="form-label" path="lastName">Last Name: </form:label>
 				<form:errors class="text-danger" path="lastName" />
-				<form:input type="date" class="form-control" path="lastName" />
+				<form:input type="text" class="form-control" path="lastName" />
 			</div>
 			<div class="form-group">
-				<form:label class="form-label" path="age">Last Name: </form:label>
+				<form:label class="form-label" path="age">Age </form:label>
 				<form:errors class="text-danger" path="age" />
 				<form:input type="number" class="form-control" path="age" />
 			</div>

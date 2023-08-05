@@ -25,6 +25,9 @@ public class MainService {
 	public DojoModel crearDojo(DojoModel dojo) {
 		return dojoRepo.save(dojo);
 	}
+	public NinjaModel crearNinja(NinjaModel ninja) {
+		return ninjaRepo.save(ninja);
+	}
 	
 	
 	//METODOS LEER
@@ -35,6 +38,10 @@ public class MainService {
 		return ninjaRepo.findAll();
 	}
 	
+	public DojoModel unDojo(Long id) {
+		return dojoRepo.findById(id).orElse(null);
+		
+	}
 	
 	
 

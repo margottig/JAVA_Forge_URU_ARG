@@ -13,6 +13,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "ninjas")
@@ -21,9 +23,15 @@ public class NinjaModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotBlank
 	private String firstName;
 	private String lastName;
+	
+	//@NotBlank para tipos tipos de datos string
+	@Min(value=18, message="Debes ser mayor a 18")
 	private int age;
+	
 	@Column(updatable = false)
 	private Date createdAt;
 	private Date updatedAt;

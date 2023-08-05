@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>AQUI EL TITULO DE TU PLNATILLA</title>
+<title>UN DOJO</title>
 <!-- BOOTSTRAP  -->
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -24,17 +24,31 @@
 <body>
 
 	<div class="container">
-		<h1>Bienvenidos Dojos y Ninjas</h1>
-		<a href="/dojo/new"> Agrega una nuevo dojo </a> | 
-		<a href="/ninja/new">Agrega	una nuevo ninja </a>
+		<h1>
+			Bienvenido al dojo
+			<c:out value="${dojo.name }"></c:out>
+		</h1>
 
-		<ul>
-			<c:forEach items="${dojos }" var="dojo">
-				<li> <a href="/dojo/${dojo.id }"> <c:out value="${dojo.name }"></c:out></a>  </li>
-			</c:forEach>
-		</ul>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Age</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${dojo.ninjas }" var="ninja">
+					<tr>
+						<td><c:out value="${ninja.firstName}"></c:out></td>
+						<td><c:out value="${ninja.lastName }"></c:out></td>
+						<td> <c:out value="${ninja.age }"></c:out></td>
 
-
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<a href="/">Go back</a>
 	</div>
 
 </body>

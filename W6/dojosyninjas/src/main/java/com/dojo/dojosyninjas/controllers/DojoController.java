@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dojo.dojosyninjas.models.DojoModel;
@@ -41,6 +42,12 @@ public class DojoController{
 		mainServ.crearDojo(dojo);
 		return "redirect:/";
 
+	}
+	
+	@GetMapping("/dojo/{idDojo}")
+	public String ninjasEnDojos(@PathVariable("idDojo") Long id, Model viewModel ) {
+		viewModel.addAttribute("dojo", mainServ.unDojo(id));
+		return "/dojos/showdojo.jsp";
 	}
 	
 	
