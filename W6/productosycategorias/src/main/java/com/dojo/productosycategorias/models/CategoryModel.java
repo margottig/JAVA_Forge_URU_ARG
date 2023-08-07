@@ -2,7 +2,7 @@ package com.dojo.productosycategorias.models;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale.Category;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

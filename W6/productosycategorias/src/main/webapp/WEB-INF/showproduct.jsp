@@ -23,31 +23,36 @@
 </head>
 <body>
 
-	<div class="container"></div>
-		<h1> <c:out value="${producto.name }"></c:out>
-		 </h1>
+	<div class="container mx-auto">
 
-		<div class="col-6">
-			<h2>Categorias</h2>
-			<c:forEach items="${producto.categories}" var="categoria">
-				<li>${categoria.name }</li>
-			</c:forEach>
-		</div>
-		<div class="col-6">
-			<h2>Add Category:</h2>
-			<form:form action="/aso/${producto.id }" method="post"
-				modelAttribute="asociacion">
-				<form:input type="hidden" path="product" value="${producto.id }" />
-				<form:select class="form-control" path="category">
-					<c:forEach items="${categorias}" var="categoria">
-						<form:option value="${categoria.id} "> ${categoria.name}  
+		<h1>
+			<c:out value="${producto.name }"></c:out>
+		</h1>
+
+		<div class="row">
+			<div class="col-6">
+				<h2>Categorias</h2>
+				<c:forEach items="${producto.getCategories()}" var="categoria">
+					<li>${categoria.name }</li>
+				</c:forEach>
+			</div>
+			<div class="col-6">
+				<h2>Add Category:</h2>
+				<form:form action="/aso/${producto.id }" method="post"
+					modelAttribute="asociacion">
+					<form:input type="hidden" path="product" value="${producto.id }" />
+					<form:select class="form-control" path="category">
+						<c:forEach items="${categorias}" var="categoria">
+							<form:option value="${categoria.id} "> ${categoria.name}  
 									</form:option>
-					</c:forEach>
-				</form:select>
-				<button>Agregar</button>
-			</form:form>
+						</c:forEach>
+					</form:select>
+					<button>Agregar</button>
+				</form:form>
 
 
+			</div>
 		</div>
+	</div>
 </body>
 </html>
