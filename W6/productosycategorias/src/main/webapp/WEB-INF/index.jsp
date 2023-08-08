@@ -30,6 +30,13 @@
 			<a class="mx-2" href="/categories/new"> Nueva Category</a> 
 			<a class="mx-2" href="/products/new"> Nuevo Producto</a>
 		</div>
+		
+		<h2> Todos los productos</h2>
+		<ul>
+		<c:forEach items="${productos }" var="producto">
+			<li> <a href="product/${producto.id }"> <c:out value="${producto.name}"></c:out>  </a> </li>
+		</c:forEach>
+		</ul>
 	</div>
 
 </body>

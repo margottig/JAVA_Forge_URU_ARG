@@ -44,5 +44,9 @@ public class MainService {
 		public ProductModel unProducto(Long id) {
 			return productRepo.findById(id).orElse(null);
 		}
+		
+		public List<ProductModel> todosProductos(){
+			return productRepo.findAll();
+		}
 	
 }

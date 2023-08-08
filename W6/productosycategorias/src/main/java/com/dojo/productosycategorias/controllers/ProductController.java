@@ -46,6 +46,7 @@ public class ProductController {
 		ProductModel producto = mainServ.unProducto(idProduct);
 		modelo.addAttribute("categorias", mainServ.productoSinCategoria(producto));
 		modelo.addAttribute("producto",producto);
+		System.out.println(producto.getCategories().size());
 		return "showproduct.jsp";
 	}
 	

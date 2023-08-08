@@ -32,9 +32,11 @@
 		<div class="row">
 			<div class="col-6">
 				<h2>Categorias</h2>
-				<c:forEach items="${producto.getCategories()}" var="categoria">
-					<li>${categoria.name }</li>
-				</c:forEach>
+				<ul>
+					<c:forEach items="${producto.getCategories()}" var="categoria">
+						<li> <c:out value="${categoria.name }"></c:out>  </li>
+					</c:forEach>
+				</ul>
 			</div>
 			<div class="col-6">
 				<h2>Add Category:</h2>

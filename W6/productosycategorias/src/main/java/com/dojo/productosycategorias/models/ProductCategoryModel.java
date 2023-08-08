@@ -15,7 +15,7 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "productos_y_categorias")
+@Table(name = "categories_products")
 public class ProductCategoryModel {
 
 	@Id
