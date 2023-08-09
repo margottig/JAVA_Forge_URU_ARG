@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>AQUI EL TITULO DE TU PLNATILLA</title>
+<title>APP</title>
 <!-- BOOTSTRAP  -->
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -22,6 +22,10 @@
 
 </head>
 <body>
-
+	<h1>
+		Bienvenid@
+		<c:out value="${usuario.email }"></c:out>
+	</h1>
+	<a href="/logout">Logout</a>
 </body>
 </html>
