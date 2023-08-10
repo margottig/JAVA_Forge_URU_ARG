@@ -36,8 +36,29 @@
 				<form:form method="POST" action="/registration"
 					modelAttribute="user">
 					<div>
+						<form:label path="nombre">First Name:</form:label>
+						<form:input type="text" path="nombre" />
+					</div>
+					<div>
+						<form:label path="apellido">Last Name:</form:label>
+						<form:input type="text" path="apellido" />
+					</div>
+					<div>
 						<form:label path="email">Email:</form:label>
 						<form:input type="email" path="email" />
+					</div>
+					<div>
+						<form:label path="ubicacion">Location:</form:label>
+						<form:input type="ubicacion" path="ubicacion" />
+					</div>
+					<div>
+						<form:label path="provincia">State:</form:label>
+						<form:select path="provincia" type="text" class="form-control">
+							<c:forEach items="${provincias}" var="provincia">
+								<form:option value="${provincia }"></form:option>
+							</c:forEach>
+						</form:select>
+	
 					</div>
 					<div>
 						<form:label path="password">Password:</form:label>
@@ -49,7 +70,9 @@
 					</div>
 					<input type="submit" value="Register!" />
 				</form:form>
-				<p class="text-success"> <c:out value="${registro }"></c:out> </p>
+				<p class="text-success">
+					<c:out value="${registro }"></c:out>
+				</p>
 			</div>
 
 			<div class="col-4 offset-1">

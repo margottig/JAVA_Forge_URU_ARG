@@ -22,10 +22,88 @@
 
 </head>
 <body>
-	<h1>
-		Bienvenid@
-		<c:out value="${usuario.email }"></c:out>
-	</h1>
-	<a href="/logout">Logout</a>
+
+	<div class="container">
+
+		<h1>
+			Welcome,
+			<c:out value="${usuario.nombre }"></c:out>
+		</h1>
+		<div class="text-end">
+			<a href="/logout">Logout</a>
+		</div>
+
+		<hr>
+		<h3>Here are some events in your state:</h3>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Location</th>
+					<th>Province</th>
+					<th>Host</th>
+					<th>Action/Status</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+		</table>
+
+
+		<hr />
+
+		<h3>Here are some events in other state:</h3>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Location</th>
+					<th>Province</th>
+					<th>Host</th>
+					<th>Action/Status</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+		</table>
+ 
+ 		<div class="col-6">
+			<form:form method="POST" action="/nuevo/evento" modelAttribute="evento">
+			<form:input type="hidden" path="organizador" value="${usuario.id}"/>
+				<div>
+					<form:label path="nombre">Event Name:</form:label>
+					<form:input type="text" path="nombre" />
+				</div>
+				<div>
+					<form:label path="fecha">Event date:</form:label>
+					<form:input type="date" path="fecha" />
+				</div>
+				<div>
+					<form:label path="ubicacion">Location:</form:label>
+					<form:input type="text" path="ubicacion" />
+				</div>
+				<div>
+					<form:label path="provincia">State:</form:label>
+					<form:select path="provincia" type="text" class="form-control">
+						<c:forEach items="${provincias}" var="provincia">
+							<form:option value="${provincia }"></form:option>
+						</c:forEach>
+					</form:select>
+				</div>		
+				<input type="submit" value="Create Event!" />
+			</form:form>
+		</div>
+
+
+
+
+	</div>
+
+
+
 </body>
 </html>

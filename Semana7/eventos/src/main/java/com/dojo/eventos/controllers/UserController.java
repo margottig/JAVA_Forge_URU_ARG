@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.dojo.eventos.models.EventModel;
 import com.dojo.eventos.models.LogReg;
+import com.dojo.eventos.models.Provincias;
 import com.dojo.eventos.models.User;
 import com.dojo.eventos.services.UserService;
 
@@ -26,6 +28,7 @@ public class UserController {
 	public String raiz(Model viewModel) {
 		viewModel.addAttribute("user", new User());
 		viewModel.addAttribute("login", new LogReg());
+		viewModel.addAttribute("provincias", Provincias.provincias);
 		return "loginreg.jsp";
 	}
 	
@@ -35,6 +38,7 @@ public class UserController {
 			BindingResult resultado, Model viewModel ) {
 		if(resultado.hasErrors()) {
 			viewModel.addAttribute("login", new LogReg());
+			viewModel.addAttribute("provincias", Provincias.provincias);
 			return "loginreg.jsp";
 		}
 		User usuarioRegistrado = userServ.registroUsuario(usuario, resultado);
@@ -59,7 +63,7 @@ public class UserController {
 				resultado )) {
 			User usuarioLog = userServ.encontrarPorEmail(loginuser.getEmail());
 			sesion.setAttribute("userID",usuarioLog.getId());
-			return "redirect:/dashboard";
+			return "redirect:/events";
 		}else {
 			viewModel.addAttribute("errorLog", "Por favor intenta de nuevo");
 			viewModel.addAttribute("user", new User());
@@ -68,14 +72,17 @@ public class UserController {
 		
 	}
 	
-	@GetMapping("/dashboard")
-	public String bienvenida(HttpSession sesion, Model viewModel) {
+	@GetMapping("/events")
+	public String bienvenida(@Valid @ModelAttribute("evento") EventModel evento,
+			BindingResult resultado,
+			HttpSession sesion, Model viewModel) {
 		Long userId =  (Long) sesion.getAttribute("userID");
 		if(userId == null ) {
 			return "redirect:/";
 		}
 		User usuario = userServ.encontrarUserPorId(userId);
 		viewModel.addAttribute("usuario", usuario);
+		viewModel.addAttribute("provincias", Provincias.provincias);
 		return "dashboard.jsp";
 		
 	}
