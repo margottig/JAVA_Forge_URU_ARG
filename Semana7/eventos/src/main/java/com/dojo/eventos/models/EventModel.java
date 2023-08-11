@@ -17,6 +17,7 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -33,6 +34,7 @@ public class EventModel {
 
 	@Future(message = "Por favor ingresa una fecha posterior")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull(message="Por favor ingresa una fecha")
 	private Date fecha;
 
 	@NotBlank(message = " Por favor ingresa una ubicacion")

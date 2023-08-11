@@ -11,6 +11,7 @@ import com.dojo.eventos.models.EventModel;
 import com.dojo.eventos.models.LogReg;
 import com.dojo.eventos.models.Provincias;
 import com.dojo.eventos.models.User;
+import com.dojo.eventos.services.EventService;
 import com.dojo.eventos.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -20,8 +21,10 @@ import jakarta.validation.Valid;
 public class UserController {
 	
 	private final UserService userServ;
-	public UserController(UserService uSer) {
+	private final EventService eventService;
+	public UserController(UserService uSer, EventService eServ) {
 		this.userServ = uSer;
+		this.eventService = eServ;
 	}
 	
 	@GetMapping("/")
@@ -73,7 +76,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/events")
-	public String bienvenida(@Valid @ModelAttribute("evento") EventModel evento,
+	public String bienvenida(@ModelAttribute("evento") EventModel evento,
 			BindingResult resultado,
 			HttpSession sesion, Model viewModel) {
 		Long userId =  (Long) sesion.getAttribute("userID");
@@ -83,6 +86,8 @@ public class UserController {
 		User usuario = userServ.encontrarUserPorId(userId);
 		viewModel.addAttribute("usuario", usuario);
 		viewModel.addAttribute("provincias", Provincias.provincias);
+		viewModel.addAttribute("eventosPronvinciaUser", eventService.eventoProvinciaUsuario(usuario.getProvincia()) );
+		viewModel.addAttribute("eventosNoPronvinciaUser", eventService.eventoNoProvinciaUsuario(usuario.getProvincia()) );
 		return "dashboard.jsp";
 		
 	}

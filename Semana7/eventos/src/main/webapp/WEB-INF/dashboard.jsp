@@ -38,8 +38,8 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
+					<th>Name</th>
+					<th>Date</th>
 					<th>Location</th>
 					<th>Province</th>
 					<th>Host</th>
@@ -47,6 +47,37 @@
 				</tr>
 			</thead>
 			<tbody>
+				<c:forEach items="${eventosPronvinciaUser }" var="eventoUser">
+					<tr>
+						<td><c:out value="${eventoUser.nombre }"></c:out></td>
+
+						<td><fmt:formatDate value="${eventoUser.fecha }"
+								pattern="MMMM dd, yyyy" var="fechaFormateada" /> <c:out
+								value="${fechaFormateada}"></c:out></td>
+						<td><c:out value="${eventoUser.ubicacion }"></c:out></td>
+						<td><c:out value="${eventoUser.provincia }"></c:out></td>
+						<td><c:out value="${eventoUser.organizador.nombre }"></c:out></td>
+
+
+						<td><c:choose>
+								<c:when test="${eventoUser.organizador.id == usuario.id }">
+									<a href="/event/edit"> Edit </a> |
+<%-- 									<form:form action="/event/delete/" method="post"> --%>
+									<%-- 										<form:input path="" type="hidden" /> --%>
+									<!-- 										<button class="btn btn-danger">Delete</button> -->
+									<%-- 									</form:form> --%>
+									<a href="/event/edit"> Delete </a> |
+								</c:when>
+								<c:otherwise>
+									<a> Unirse </a>
+									<a>Cancelar</a>
+								</c:otherwise>
+
+							</c:choose></td>
+
+					</tr>
+
+				</c:forEach>
 
 			</tbody>
 		</table>
@@ -58,8 +89,8 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
+					<th>Name</th>
+					<th>Date</th>
 					<th>Location</th>
 					<th>Province</th>
 					<th>Host</th>
@@ -67,24 +98,59 @@
 				</tr>
 			</thead>
 			<tbody>
+				<c:forEach items="${eventosNoPronvinciaUser }" var="otroseventos">
+					<tr>
+						<td><c:out value="${otroseventos.nombre }"></c:out></td>
+
+						<td><fmt:formatDate value="${otroseventos.fecha }"
+								pattern="MMMM dd, yyyy" var="fechaFormateada" /> <c:out
+								value="${fechaFormateada}"></c:out></td>
+
+						<td><c:out value="${otroseventos.ubicacion }"></c:out></td>
+						<td><c:out value="${otroseventos.provincia }"></c:out></td>
+						<td><c:out value="${otroseventos.organizador.nombre }"></c:out></td>
+						<td><td><c:choose>
+								<c:when test="${otroseventos.organizador.id == usuario.id }">
+									<a href="/event/edit"> Edit </a> |
+<%-- 									<form:form action="/event/delete/" method="post"> --%>
+									<%-- 										<form:input path="" type="hidden" /> --%>
+									<!-- 										<button class="btn btn-danger">Delete</button> -->
+									<%-- 									</form:form> --%>
+									<a href="/event/edit"> Delete </a> |
+								</c:when>
+								<c:otherwise>
+									<a> Unirse </a>
+									<a>Cancelar</a>
+								</c:otherwise>
+
+							</c:choose></td></td>
+
+					</tr>
+				</c:forEach>
 
 			</tbody>
 		</table>
- 
- 		<div class="col-6">
-			<form:form method="POST" action="/nuevo/evento" modelAttribute="evento">
-			<form:input type="hidden" path="organizador" value="${usuario.id}"/>
+
+		<div class="col-6">
+			<form:errors class="text-danger" path="evento.*" />
+
+			<form:form method="POST" action="/nuevo/evento"
+				modelAttribute="evento">
+				<form:input type="hidden" path="organizador" value="${usuario.id}" />
 				<div>
 					<form:label path="nombre">Event Name:</form:label>
 					<form:input type="text" path="nombre" />
+					<form:errors class="text-danger" path="nombre" />
 				</div>
 				<div>
 					<form:label path="fecha">Event date:</form:label>
 					<form:input type="date" path="fecha" />
+					<form:errors class="text-danger" path="fecha" />
 				</div>
 				<div>
 					<form:label path="ubicacion">Location:</form:label>
 					<form:input type="text" path="ubicacion" />
+					<form:errors class="text-danger" path="ubicacion" />
 				</div>
 				<div>
 					<form:label path="provincia">State:</form:label>
@@ -93,7 +159,8 @@
 							<form:option value="${provincia }"></form:option>
 						</c:forEach>
 					</form:select>
-				</div>		
+					<form:errors class="text-danger" path="provincia" />
+				</div>
 				<input type="submit" value="Create Event!" />
 			</form:form>
 		</div>
