@@ -9,6 +9,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -61,6 +64,13 @@ public class User {
 	//Relacion 1:n hacia Eventos
 	@OneToMany(mappedBy="organizador", fetch=FetchType.LAZY)
 	private List<EventModel> eventosOrganizados;
+	
+	//Relacion muchos a muchos de Usuario a Eventos
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="asistentes",
+	joinColumns= @JoinColumn(name="user_id"),
+	inverseJoinColumns = @JoinColumn(name="event_id"))
+	private List<EventModel> eventoAsistir;
 	
 	
 	

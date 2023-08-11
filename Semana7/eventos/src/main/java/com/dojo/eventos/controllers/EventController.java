@@ -3,6 +3,7 @@ package com.dojo.eventos.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,14 +79,38 @@ public class EventController {
 			return "redirect:/";
 		}
 		User usuario = userServ.encontrarUserPorId(userId);
-		//EventModel unEvento = eventService.unEvento(idEvento);  esto es innecesario
+		// EventModel unEvento = eventService.unEvento(idEvento); esto es innecesario
 		if (resultado.hasErrors()) {
 			viewModel.addAttribute("usuario", usuario);
 			viewModel.addAttribute("provincias", Provincias.provincias);
-		//	viewModel.addAttribute("evento", unEvento); esto no es correcto!!!
-			return "edit.jsp";	
+			// viewModel.addAttribute("evento", unEvento); esto no es correcto!!!
+			return "edit.jsp";
 		}
 		eventService.actualizarEvento(evento);
+		return "redirect:/events";
+	}
+
+	@DeleteMapping("/events/{id}/delete")
+	public String borrarEvento(@PathVariable("id") Long idEvento) {
+		eventService.borrarEvento(idEvento);
+		return "redirect:/events";
+	}
+
+	// Unirme/Cancelar al evento
+	@GetMapping("/event/{idEvento}/{idUsuario}/{opcion}")
+	public String asistirCancelarEvento(@PathVariable("idEvento") Long idEvento,
+			@PathVariable("idUsuario") Long idUsuario, @PathVariable("opcion") String opcion, HttpSession sesion) {
+		// validar si la sesion del usuario esta activa
+		Long userId = (Long) sesion.getAttribute("userID");
+		if (userId == null) {
+			return "redirect:/";
+		}
+		EventModel unEvento = eventService.unEvento(idEvento); 
+		boolean  unirseCancelar = (opcion.equals("unirse"));
+		User usuario = userServ.encontrarUserPorId(userId);
+		
+		eventService.unirseCancelarEvento(unEvento, usuario, unirseCancelar);
+
 		return "redirect:/events";
 	}
 

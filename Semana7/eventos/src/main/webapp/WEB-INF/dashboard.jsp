@@ -62,15 +62,24 @@
 						<td><c:choose>
 								<c:when test="${eventoUser.organizador.id == usuario.id }">
 									<a href="/events/${eventoUser.id}/edit"> Edit </a> |
-<%-- 									<form:form action="/event/delete/" method="post"> --%>
-									<%-- 										<form:input path="" type="hidden" /> --%>
-									<!-- 										<button class="btn btn-danger">Delete</button> -->
-									<%-- 									</form:form> --%>
-									<a href="/event/edit"> Delete </a>
+									<form:form action="/events/${eventoUser.id}/delete"
+										method="post">
+										<input type="hidden" name="_method" value="delete" />
+										<button class="btn btn-danger">Delete</button>
+									</form:form>
+
 								</c:when>
 								<c:otherwise>
-									<a> Unirse </a>
-									<a>Cancelar</a>
+									<c:choose>
+										<c:when test="${ eventoUser.asistentes.contains(usuario)}">
+											<a href="/event/${eventoUser.id}/${usuario.id}/cancelar">
+												Cancelar </a>
+										</c:when>
+										<c:otherwise>
+											<a href="/event/${eventoUser.id}/${usuario.id}/unirse">
+												Unirse </a>
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 
 							</c:choose></td>
@@ -112,15 +121,23 @@
 						<td><c:choose>
 								<c:when test="${otroseventos.organizador.id == usuario.id }">
 									<a href="/events/${otroseventos.id}/edit"> Edit </a> |
-<%-- 									<form:form action="/event/delete/" method="post"> --%>
-									<%-- 										<form:input path="" type="hidden" /> --%>
-									<!-- 										<button class="btn btn-danger">Delete</button> -->
-									<%-- 									</form:form> --%>
-									<a href="/event/edit"> Delete </a>
+							<form:form action="/events/${otroseventos.id}/delete"
+										method="post">
+										<input type="hidden" name="_method" value="delete" />
+										<button class="btn btn-danger">Delete</button>
+									</form:form>
 								</c:when>
-								<c:otherwise>
-									<a> Unirse </a>
-									<a>Cancelar</a>
+							<c:otherwise>
+									<c:choose>
+										<c:when test="${ otroseventos.asistentes.contains(usuario)}">
+											<a href="/event/${otroseventos.id}/${usuario.id}/cancelar">
+												Cancelar </a>
+										</c:when>
+										<c:otherwise>
+											<a href="/event/${otroseventos.id}/${usuario.id}/unirse">
+												Unirse </a>
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 
 							</c:choose></td>

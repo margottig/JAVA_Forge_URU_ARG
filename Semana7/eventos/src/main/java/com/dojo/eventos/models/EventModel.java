@@ -1,6 +1,7 @@
 package com.dojo.eventos.models;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -34,7 +37,7 @@ public class EventModel {
 
 	@Future(message = "Por favor ingresa una fecha posterior")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@NotNull(message="Por favor ingresa una fecha")
+	@NotNull(message = "Por favor ingresa una fecha")
 	private Date fecha;
 
 	@NotBlank(message = " Por favor ingresa una ubicacion")
@@ -52,8 +55,21 @@ public class EventModel {
 	@JoinColumn(name = "user_id")
 	private User organizador;
 
+	// Relacion n:n Eventos a Usuarios
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "asistentes", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private List<User> asistentes;
+
 	public EventModel() {
 
+	}
+
+	public List<User> getAsistentes() {
+		return asistentes;
+	}
+
+	public void setAsistentes(List<User> asistentes) {
+		this.asistentes = asistentes;
 	}
 
 	public Long getId() {
