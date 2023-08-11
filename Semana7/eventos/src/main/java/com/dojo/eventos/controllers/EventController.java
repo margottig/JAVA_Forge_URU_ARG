@@ -3,8 +3,11 @@ package com.dojo.eventos.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.dojo.eventos.models.EventModel;
 import com.dojo.eventos.models.Provincias;
@@ -17,20 +20,21 @@ import jakarta.validation.Valid;
 
 @Controller
 public class EventController {
-	
+
 	private final EventService eventService;
 	private final UserService userServ;
-	public EventController(EventService eSer, UserService uSer ) {
+
+	public EventController(EventService eSer, UserService uSer) {
 		this.eventService = eSer;
 		this.userServ = uSer;
 	}
-	
+
 	@PostMapping("/nuevo/evento")
-	public String crearEvento(@Valid @ModelAttribute("evento") EventModel evento, 
-			BindingResult resultado, HttpSession sesion, Model viewModel) {
-		//validar si la sesion del usuario esta activa
-		Long userId =  (Long) sesion.getAttribute("userID");
-		if(userId == null ) {
+	public String crearEvento(@Valid @ModelAttribute("evento") EventModel evento, BindingResult resultado,
+			HttpSession sesion, Model viewModel) {
+		// validar si la sesion del usuario esta activa
+		Long userId = (Long) sesion.getAttribute("userID");
+		if (userId == null) {
 			return "redirect:/";
 		}
 		if (resultado.hasErrors()) {
@@ -42,7 +46,47 @@ public class EventController {
 		eventService.crearEvento(evento);
 		return "redirect:/events";
 	}
-	
-	
+
+	// EDITAR EVENTO
+	@GetMapping("/events/{idEvento}/edit")
+	public String formEdicionEvento(@PathVariable("idEvento") Long idEvento,
+			@ModelAttribute("evento") EventModel evento, HttpSession sesion, Model viewModel) {
+		// validar si la sesion del usuario esta activa
+		Long userId = (Long) sesion.getAttribute("userID");
+		if (userId == null) {
+			return "redirect:/";
+		}
+		EventModel unEvento = eventService.unEvento(idEvento);
+		if (unEvento == null) {
+			return "redirect:/events";
+		}
+		User usuario = userServ.encontrarUserPorId(userId);
+		viewModel.addAttribute("usuario", usuario);
+		viewModel.addAttribute("provincias", Provincias.provincias);
+		viewModel.addAttribute("evento", unEvento);
+
+		return "edit.jsp";
+
+	}
+
+	@PutMapping("/events/{id}/edit")
+	public String editarEvento(@Valid @ModelAttribute("evento") EventModel evento, BindingResult resultado,
+			@PathVariable("id") Long idEvento, HttpSession sesion, Model viewModel) {
+		// validar si la sesion del usuario esta activa
+		Long userId = (Long) sesion.getAttribute("userID");
+		if (userId == null) {
+			return "redirect:/";
+		}
+		User usuario = userServ.encontrarUserPorId(userId);
+		//EventModel unEvento = eventService.unEvento(idEvento);  esto es innecesario
+		if (resultado.hasErrors()) {
+			viewModel.addAttribute("usuario", usuario);
+			viewModel.addAttribute("provincias", Provincias.provincias);
+		//	viewModel.addAttribute("evento", unEvento); esto no es correcto!!!
+			return "edit.jsp";	
+		}
+		eventService.actualizarEvento(evento);
+		return "redirect:/events";
+	}
 
 }

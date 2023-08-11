@@ -61,12 +61,12 @@
 
 						<td><c:choose>
 								<c:when test="${eventoUser.organizador.id == usuario.id }">
-									<a href="/event/edit"> Edit </a> |
+									<a href="/events/${eventoUser.id}/edit"> Edit </a> |
 <%-- 									<form:form action="/event/delete/" method="post"> --%>
 									<%-- 										<form:input path="" type="hidden" /> --%>
 									<!-- 										<button class="btn btn-danger">Delete</button> -->
 									<%-- 									</form:form> --%>
-									<a href="/event/edit"> Delete </a> |
+									<a href="/event/edit"> Delete </a>
 								</c:when>
 								<c:otherwise>
 									<a> Unirse </a>
@@ -109,21 +109,21 @@
 						<td><c:out value="${otroseventos.ubicacion }"></c:out></td>
 						<td><c:out value="${otroseventos.provincia }"></c:out></td>
 						<td><c:out value="${otroseventos.organizador.nombre }"></c:out></td>
-						<td><td><c:choose>
+						<td><c:choose>
 								<c:when test="${otroseventos.organizador.id == usuario.id }">
-									<a href="/event/edit"> Edit </a> |
+									<a href="/events/${otroseventos.id}/edit"> Edit </a> |
 <%-- 									<form:form action="/event/delete/" method="post"> --%>
 									<%-- 										<form:input path="" type="hidden" /> --%>
 									<!-- 										<button class="btn btn-danger">Delete</button> -->
 									<%-- 									</form:form> --%>
-									<a href="/event/edit"> Delete </a> |
+									<a href="/event/edit"> Delete </a>
 								</c:when>
 								<c:otherwise>
 									<a> Unirse </a>
 									<a>Cancelar</a>
 								</c:otherwise>
 
-							</c:choose></td></td>
+							</c:choose></td>
 
 					</tr>
 				</c:forEach>

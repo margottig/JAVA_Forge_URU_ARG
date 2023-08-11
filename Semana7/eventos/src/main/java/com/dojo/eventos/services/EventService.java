@@ -15,7 +15,12 @@ public class EventService {
 		this.eventRepo = eRe;
 	}
 	
+	//Crear Evento
 	public EventModel crearEvento(EventModel evento) {
+		return eventRepo.save(evento);
+	}
+	// Editar Evento
+	public EventModel actualizarEvento(EventModel evento) {
 		return eventRepo.save(evento);
 	}
 	
@@ -25,6 +30,10 @@ public class EventService {
 	
 	public List<EventModel> eventoNoProvinciaUsuario(String provincia){
 		return eventRepo.findByProvinciaIsNot(provincia);
+	}
+	
+	public EventModel unEvento(Long id) {
+		return eventRepo.findById(id).orElse(null);
 	}
 
 }
