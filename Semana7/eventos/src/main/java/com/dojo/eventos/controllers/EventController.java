@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dojo.eventos.models.EventModel;
 import com.dojo.eventos.models.Provincias;
@@ -105,13 +107,44 @@ public class EventController {
 		if (userId == null) {
 			return "redirect:/";
 		}
-		EventModel unEvento = eventService.unEvento(idEvento); 
-		boolean  unirseCancelar = (opcion.equals("unirse"));
+		EventModel unEvento = eventService.unEvento(idEvento);
+		boolean unirseCancelar = (opcion.equals("unirse"));
 		User usuario = userServ.encontrarUserPorId(userId);
-		
+
 		eventService.unirseCancelarEvento(unEvento, usuario, unirseCancelar);
 
 		return "redirect:/events";
 	}
 
+	@GetMapping("/events/{idEvento}")
+	public String mostrarEvento(Model viewModel, @PathVariable("idEvento") Long idEvento, HttpSession sesion) {
+		// validar si la sesion del usuario esta activa
+		Long userId = (Long) sesion.getAttribute("userID");
+		if (userId == null) {
+			return "redirect:/";
+		}
+		viewModel.addAttribute("evento", eventService.unEvento(idEvento));
+//		viewModel.add
+		return "show.jsp";
+	}
+
+	@PostMapping("events/{idEvento}/comentario")
+	public String agregarComentario(@PathVariable("idEvento") Long idEvento, @RequestParam("comment") String comentario,
+			HttpSession sesion, RedirectAttributes errores) {
+		// validar si la sesion del usuario esta activa
+		Long userId = (Long) sesion.getAttribute("userID");
+		if (userId == null) {
+			return "redirect:/";
+		}
+		if(comentario.equals("")) {
+			errores.addFlashAttribute("error", "Por favor no envias mensajes vacios");
+			return "redirect:/events";
+		}
+		EventModel unEvento = eventService.unEvento(idEvento);
+		User usuario = userServ.encontrarUserPorId(userId);
+		
+		eventService.agregarComentario(usuario, unEvento, comentario);
+
+		return "redirect:/events/"+idEvento;
+	}
 }

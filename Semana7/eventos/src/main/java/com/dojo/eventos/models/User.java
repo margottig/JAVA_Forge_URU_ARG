@@ -3,6 +3,7 @@ package com.dojo.eventos.models;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -73,6 +74,10 @@ public class User {
 	private List<EventModel> eventoAsistir;
 	
 	
+	//Relacion n:n hacia mensajes
+		@OneToMany(mappedBy="autor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+		private List<MensajeModel> mensajes;
+	
 	
 	
 
@@ -97,6 +102,30 @@ public class User {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public List<EventModel> getEventosOrganizados() {
+		return eventosOrganizados;
+	}
+
+	public void setEventosOrganizados(List<EventModel> eventosOrganizados) {
+		this.eventosOrganizados = eventosOrganizados;
+	}
+
+	public List<EventModel> getEventoAsistir() {
+		return eventoAsistir;
+	}
+
+	public void setEventoAsistir(List<EventModel> eventoAsistir) {
+		this.eventoAsistir = eventoAsistir;
+	}
+
+	public List<MensajeModel> getMensajes() {
+		return mensajes;
+	}
+
+	public void setMensajes(List<MensajeModel> mensajes) {
+		this.mensajes = mensajes;
 	}
 
 	public String getApellido() {

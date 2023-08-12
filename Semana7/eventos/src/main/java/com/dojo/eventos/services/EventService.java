@@ -5,15 +5,19 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.dojo.eventos.models.EventModel;
+import com.dojo.eventos.models.MensajeModel;
 import com.dojo.eventos.models.User;
 import com.dojo.eventos.repositories.EventRepo;
+import com.dojo.eventos.repositories.MensajeRepo;
 
 @Service
 public class EventService {
 	
 	private final EventRepo eventRepo;
-	public EventService(EventRepo eRe) {
+	private final MensajeRepo mensajeRepo;
+	public EventService(EventRepo eRe, MensajeRepo mRe) {
 		this.eventRepo = eRe;
+		this.mensajeRepo = mRe;
 	}
 	
 	//Crear Evento
@@ -50,6 +54,13 @@ public class EventService {
 	
 	public EventModel unEvento(Long id) {
 		return eventRepo.findById(id).orElse(null);
+	}
+	
+	// CREAR UN MENSAJE
+	public void agregarComentario(User usuario, EventModel evento, String comentario) {
+		MensajeModel mensaje = new MensajeModel(usuario, evento, comentario);
+		mensajeRepo.save(mensaje);
+		
 	}
 
 }

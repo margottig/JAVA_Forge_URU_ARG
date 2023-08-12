@@ -49,7 +49,7 @@
 			<tbody>
 				<c:forEach items="${eventosPronvinciaUser }" var="eventoUser">
 					<tr>
-						<td><c:out value="${eventoUser.nombre }"></c:out></td>
+						<td> <a href=" /events/${eventoUser.id}"> <c:out value="${eventoUser.nombre }"></c:out></a> </td>
 
 						<td><fmt:formatDate value="${eventoUser.fecha }"
 								pattern="MMMM dd, yyyy" var="fechaFormateada" /> <c:out
@@ -109,7 +109,7 @@
 			<tbody>
 				<c:forEach items="${eventosNoPronvinciaUser }" var="otroseventos">
 					<tr>
-						<td><c:out value="${otroseventos.nombre }"></c:out></td>
+						<td> <a href=" /events/${otroseventos.id}"> <c:out value="${otroseventos.nombre }"></c:out></a> </td>
 
 						<td><fmt:formatDate value="${otroseventos.fecha }"
 								pattern="MMMM dd, yyyy" var="fechaFormateada" /> <c:out
