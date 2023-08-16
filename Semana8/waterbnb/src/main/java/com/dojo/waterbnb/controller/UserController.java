@@ -62,7 +62,7 @@ public class UserController {
 			User usuarioLog = userServ.encontrarPorEmail(loginuser.getEmail());
 			sesion.setAttribute("userID",usuarioLog.getId());
 			if(usuarioLog.getRol().equals(1)) {
-				return "redirect:/host/dashboard.jsp";
+				return "redirect:/host/dashboard";
 			}
 			return "redirect:/";
 		}else {
