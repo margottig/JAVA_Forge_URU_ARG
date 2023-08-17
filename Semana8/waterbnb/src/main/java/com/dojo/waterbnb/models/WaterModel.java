@@ -39,8 +39,7 @@ public class WaterModel {
 	@NotBlank(message = " Selecciona el tamaño")
 	private String poolsize;
 
-	@NotBlank(message = " Agrega un precio por noche")
-	@Min(value = 1)
+	@Min(value = 1, message= " Agrega un precio por noche")
 	private double costo;
 
 	@DecimalMin("1.0")

@@ -50,47 +50,16 @@
 					</tr>
 				</thead>
 				<tbody>
-					<%-- 				<c:forEach items="${eventosPronvinciaUser }" var="eventoUser"> --%>
-					<!-- 					<tr> -->
-					<%-- 						<td><a href=" /events/${eventoUser.id}"> <c:out --%>
-					<%-- 									value="${eventoUser.nombre }"></c:out></a></td> --%>
+					<c:forEach items="${usuario.eventosOrganizados }" var="evento">
+						<tr>
+							<td><c:out value="${evento.direccion}"></c:out></td>
+							<td><c:out value="${evento.poolsize}"></c:out></td>
+							<td><c:out value="${evento.costo}"></c:out></td>
+							<td><a href="#"> <c:out value="${evento.rating}"></c:out>/5 - edit</a></td>
+						</tr>
 
-					<%-- 						<td><fmt:formatDate value="${eventoUser.fecha }" --%>
-					<%-- 								pattern="MMMM dd, yyyy" var="fechaFormateada" /> <c:out --%>
-					<%-- 								value="${fechaFormateada}"></c:out></td> --%>
-					<%-- 						<td><c:out value="${eventoUser.ubicacion }"></c:out></td> --%>
-					<%-- 						<td><c:out value="${eventoUser.provincia }"></c:out></td> --%>
-					<%-- 						<td><c:out value="${eventoUser.organizador.nombre }"></c:out></td> --%>
+					</c:forEach>
 
-
-					<%-- 						<td><c:choose> --%>
-					<%-- 								<c:when test="${eventoUser.organizador.id == usuario.id }"> --%>
-					<%-- 									<a href="/events/${eventoUser.id}/edit"> Edit </a> | --%>
-					<%-- 									<form:form action="/events/${eventoUser.id}/delete" --%>
-					<%-- 										method="post"> --%>
-					<!-- 										<input type="hidden" name="_method" value="delete" /> -->
-					<!-- 										<button class="btn btn-danger">Delete</button> -->
-					<%-- 									</form:form> --%>
-
-					<%-- 								</c:when> --%>
-					<%-- 								<c:otherwise> --%>
-					<%-- 									<c:choose> --%>
-					<%-- 										<c:when test="${ eventoUser.asistentes.contains(usuario)}"> --%>
-					<%-- 											<a href="/event/${eventoUser.id}/${usuario.id}/cancelar"> --%>
-					<!-- 												Cancelar </a> -->
-					<%-- 										</c:when> --%>
-					<%-- 										<c:otherwise> --%>
-					<%-- 											<a href="/event/${eventoUser.id}/${usuario.id}/unirse"> --%>
-					<!-- 												Unirse </a> -->
-					<%-- 										</c:otherwise> --%>
-					<%-- 									</c:choose> --%>
-					<%-- 								</c:otherwise> --%>
-
-					<%-- 							</c:choose></td> --%>
-
-					<!-- 					</tr> -->
-
-					<%-- 				</c:forEach> --%>
 
 				</tbody>
 			</table>
@@ -100,11 +69,8 @@
 		<div class="row">
 			<p>New Listing</p>
 			<div class="col-6">
-
-				<form:errors class="text-danger" path="evento.*" />
-
 				<form:form method="POST" action="/new/pool" modelAttribute="newpool">
-					<input type="hidden" path="organizador" value="${usuario.id}" />
+					<form:input type="hidden" path="organizador" value="${usuario.id}" />
 					<div>
 						<form:label path="direccion">Address:</form:label>
 						<form:input type="text" path="direccion" />
