@@ -23,6 +23,7 @@
 </head>
 <body>
 
+
 	<div class="container">
 		<div class="row">
 			<div class="col text-end">
@@ -32,52 +33,84 @@
 						<a href="/logout"> Logout</a>
 					</c:when>
 					<c:otherwise>
-					<a href="/guest/signin"> Sign in / Sign up</a>
-					
+						<a href="/guest/signin"> Sign in / Sign up</a>
+
 					</c:otherwise>
 				</c:choose>
-			
+			</div>
+
+
+		</div>
+
+		<div class="row">
+			<div class="col-3">
+				<p>
+					<c:out value="${pool.direccion }"></c:out>
+				</p>
+				<p>
+					<c:out value="${pool.description}"></c:out>
+				</p>
+
+			</div>
+			<div class="col-3">
+
+				<p>
+					Email:
+					<c:out value="${pool.organizador.email}"></c:out>
+				</p>
+				<p>
+					Name:
+					<c:out value="${pool.organizador.nombre}"></c:out>
+				</p>
+				<p>
+					Pool size:
+					<c:out value="${pool.poolsize}"></c:out>
+				</p>
+				<p>
+					Cost:
+					<c:out value="${pool.costo}"></c:out>
+				</p>
+
 			</div>
 		</div>
-		<div class="row justify-content-center">
-			<form action="/search" method="post">
-				<label> Find your pool!</label>
-				<div class="form-group row mb-3">
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="location" />
-					</div>
-					<div class="col-sm-2">
-						<button class="btn btn-outline-primary">Search</button>
-					</div>
-				</div>
-			</form>
+
+		<div class="row justify-content-between">
+			<div class="col-1">
+				<p>
+					Reviews
+					<c:out value="${pool.rating }"></c:out>
+				</p>
+
+			</div>
+			<div class="col-1">
+				<a class="text-dark" href="/pools/${pool.id }/review"> Leave a
+					review <c:out value="${pool.rating }"></c:out>
+				</a>
+
+			</div>
+
 
 		</div>
+
 		<div class="row">
-			<table class="table">
-				<thead>
-					<th>Addres</th>
-					<th>Pool Size</th>
-					<th>Cost per night</th>
-					<th>Details</th>
-				</thead>
-				<tbody>
-					<c:forEach items="${ pools}" var="lugar">
-						<tr>
-							<td><c:out value="${lugar.direccion }"></c:out></td>
-							<td><c:out value="${lugar.poolsize }"></c:out></td>
-							<td><c:out value="${lugar.costo }"></c:out></td>
-							<td><a href="/pools/${lugar.id }"> <c:out
-										value="${lugar.rating }"></c:out> - See more
-							</a></td>
-						</tr>
-					</c:forEach>
+			<c:forEach items="${pool.comentarios }" var="comentario">
+				<div class="col-4">
+					<p>
+						<c:out value="${comentario.autor.nombre}">
+						</c:out>
+						<c:out value="${comentario.autor.apellido }">
+						</c:out>
 
+					</p>
 
-				</tbody>
-			</table>
+				</div>
+
+			</c:forEach>
 
 		</div>
+
+
+
 	</div>
 
 </body>

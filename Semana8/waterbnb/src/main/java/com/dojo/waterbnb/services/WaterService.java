@@ -23,6 +23,10 @@ public class WaterService {
 		return waterRepo.findByDireccion(location);
 	}
 	
+	public WaterModel encontrarPollPorId(Long idPool) {
+		return waterRepo.findById(idPool).orElse(null);
+	}
+	
 //	public List<WaterModel> eventosHost(){
 //		
 //	}
