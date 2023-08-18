@@ -42,9 +42,9 @@ public class WaterModel {
 	@Min(value = 1, message= " Agrega un precio por noche")
 	private double costo;
 
-	@DecimalMin("1.0")
-	@DecimalMax("5.0")
-	private Double rating = 5.0;
+	//@DecimalMin("1.0")
+	//@DecimalMax("5.0")
+	private Double rating ;
 
 	@NotBlank(message = " Por favor ingresa un direccion")
 	private String description;

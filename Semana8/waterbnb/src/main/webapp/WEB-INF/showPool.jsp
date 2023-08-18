@@ -83,8 +83,8 @@
 
 			</div>
 			<div class="col-1">
-				<a class="text-dark" href="/pools/${pool.id }/review"> Leave a
-					review <c:out value="${pool.rating }"></c:out>
+				<a href="/pools/${pool.id }/review"> Leave a review <c:out
+						value="${pool.rating }"></c:out>
 				</a>
 
 			</div>
@@ -102,8 +102,17 @@
 						</c:out>
 
 					</p>
+					<p>
+						Rating:
+						<c:out value="${comentario.rating }"></c:out>
+					</p>
+					<p>
+						Comment:
+						<c:out value="${comentario.comentario }"></c:out>
+					</p>
 
 				</div>
+				<hr/>
 
 			</c:forEach>
 

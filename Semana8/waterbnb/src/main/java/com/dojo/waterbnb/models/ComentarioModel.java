@@ -13,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -30,6 +31,7 @@ public class ComentarioModel {
 	private String comentario;
 
 	@Min(value = 1, message = "Debe seleccionar rating")
+	@Max(value=5)
 	private int rating;
 
 	@Column(updatable = false)
@@ -42,7 +44,7 @@ public class ComentarioModel {
 	private User autor;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "event_id")
+	@JoinColumn(name = "pool_id")
 	private WaterModel evento;
 
 	public ComentarioModel() {

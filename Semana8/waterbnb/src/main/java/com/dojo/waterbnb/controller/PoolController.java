@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dojo.waterbnb.models.ComentarioModel;
 import com.dojo.waterbnb.models.User;
 import com.dojo.waterbnb.models.WaterModel;
+import com.dojo.waterbnb.services.CommentService;
 import com.dojo.waterbnb.services.UserService;
 import com.dojo.waterbnb.services.WaterService;
 
@@ -25,10 +27,12 @@ public class PoolController {
 
 	private final UserService userService;
 	private final WaterService waterService;
+	private final CommentService commentService;
 
-	public PoolController(UserService uServ, WaterService wServ) {
+	public PoolController(UserService uServ, WaterService wServ, CommentService cServ) {
 		this.userService = uServ;
 		this.waterService = wServ;
+		this.commentService = cServ;
 	}
 
 	@GetMapping("/")
@@ -104,6 +108,45 @@ public class PoolController {
 		viewModel.addAttribute("pool", unaPool);
 		
 		return "showPool.jsp";
+	}
+	
+	// RUTAS PARA AGREGAR COMENTARIO
+	@GetMapping("/pools/{idPool}/review")
+	public String formComentario(@PathVariable("idPool")Long idPool,
+			Model viewModel, HttpSession sesion, @ModelAttribute("newcomment") ComentarioModel newcomment ) {
+		Long userLog = (Long) sesion.getAttribute("userID");
+		if (userLog == null) {
+			return "redirect:/guest/signin";
+		}
+		User usuario = userService.encontrarUserPorId(userLog);
+		WaterModel unaPool = waterService.encontrarPollPorId(idPool);
+		viewModel.addAttribute("usuario", usuario);
+		viewModel.addAttribute("pool", unaPool);
+		
+		return "newReview.jsp";
+	}
+	
+	@PostMapping("/pools/{idPool}/review")
+	public String nuevoComment(@Valid @ModelAttribute("newcomment") ComentarioModel newcomment, 
+			BindingResult resultado, HttpSession sesion, Model viewModel, @PathVariable("idPool") Long idPool) {
+		Long userLog = (Long) sesion.getAttribute("userID");
+		User usuario = userService.encontrarUserPorId(userLog);
+		WaterModel unaPool = waterService.encontrarPollPorId(idPool);
+		if (userLog == null) {
+			return "redirect:/guest/signin";
+		}
+		if(resultado.hasErrors()) {
+			viewModel.addAttribute("usuario", usuario);
+			viewModel.addAttribute("pool", unaPool);
+			return "newReview.jsp";
+		}
+		
+		commentService.agregarComentario(newcomment);
+		unaPool.setRating(waterService.obtenerPromedio(idPool));
+		waterService.actualizarPool(unaPool);
+		
+		
+		return "redirect:/pools/"+idPool;
 	}
 
 }

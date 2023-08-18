@@ -27,9 +27,19 @@ public class WaterService {
 		return waterRepo.findById(idPool).orElse(null);
 	}
 	
+	public Double obtenerPromedio(Long id) {
+		return waterRepo.obtenerPromedioRatings(id).orElse(null);
+	}
+	
+	public WaterModel actualizarPool(WaterModel pool) {
+		return waterRepo.save(pool);
+	}
+	
 //	public List<WaterModel> eventosHost(){
 //		
 //	}
+	
+	
 	
 
 }
