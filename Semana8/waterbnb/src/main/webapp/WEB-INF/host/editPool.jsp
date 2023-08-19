@@ -23,53 +23,38 @@
 </head>
 <body>
 
+
+
+
+
 	<div class="container">
-
-		<h1>
-			Welcome,
-			<c:out value="${usuario.nombre }"></c:out>
-		</h1>
-
-		<div class="row justify-content-between">
-			<div class="col-2">
-				<p>Current listings</p>
-			</div>
-			<div class="col-2">
-				<a href="/logout">Logout</a> <a href="/search"> Search</a>
-			</div>
-
-		</div>
-		<div class="row col-10">
-			<table class="table table-hover border">
-				<thead>
-					<tr>
-						<th>Addres</th>
-						<th>Pool Size</th>
-						<th>Cost per night</th>
-						<th>Details</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${usuario.eventosOrganizados }" var="evento">
-						<tr>
-							<td><c:out value="${evento.direccion}"></c:out></td>
-							<td><c:out value="${evento.poolsize}"></c:out></td>
-							<td><c:out value="${evento.costo}"></c:out></td>
-							<td><a href="/host/pool/${evento.id}"> <c:out value="${evento.rating}"></c:out>/5 - edit</a></td>
-						</tr>
-
-					</c:forEach>
-
-
-				</tbody>
-			</table>
-
-		</div>
-
 		<div class="row">
-			<p>New Listing</p>
-			<div class="col-6">
-				<form:form method="POST" action="/new/pool" modelAttribute="newpool">
+			<div class="col text-end">
+				<c:choose>
+					<c:when test="${usuario != null }">
+						<a href="/"> Home</a>  | 
+						<a href="/logout"> Logout</a>
+					</c:when>
+					<c:otherwise>
+						<a href="/guest/signin"> Sign in / Sign up</a>
+
+					</c:otherwise>
+				</c:choose>
+			</div>
+
+
+		</div>
+		<div class="row">
+		
+		<p> Name: <c:out value="${pool.organizador.nombre }"></c:out> </p>
+		<p>Email: <c:out value="${pool.organizador.email }"></c:out></p>
+		</div>
+		<div class="row">
+
+			<form:form method="POST" action="/host/pool/${pool.id}"
+				modelAttribute="pool" class="row">
+				<input type="hidden" name="_method" value="put" />
+				<div class="col-3">
 					<form:input type="hidden" path="organizador" value="${usuario.id}" />
 					<div>
 						<form:label path="direccion">Address:</form:label>
@@ -78,9 +63,12 @@
 					</div>
 					<div>
 						<form:label path="description">Description:</form:label>
-						<form:input type="text" path="description" />
+						<form:textarea type="text" path="description" />
 						<form:errors class="text-danger" path="description" />
 					</div>
+					<input type="submit" value="Editar Pool!" />
+				</div>
+				<div class="col-3">
 					<div>
 						<form:label path="costo">Cost per night:</form:label>
 						<form:input type="number" path="costo" />
@@ -96,17 +84,59 @@
 						</form:select>
 						<form:errors class="text-danger" path="poolsize" />
 					</div>
-					<input type="submit" value="Add Listing!" />
-				</form:form>
-			</div>
+				</div>
+			</form:form>
 		</div>
+	</div>
 
+	<div class="row justify-content-between">
+		<div class="col-1">
+			<p>
+				Reviews
+				<c:out value="${pool.rating }"></c:out>
+			</p>
 
+		</div>
+		<div class="col-1">
+			<a href="/pools/${pool.id }/review"> Leave a review <c:out
+					value="${pool.rating }"></c:out>
+			</a>
+
+		</div>
 
 
 	</div>
 
+	<div class="row">
+		<c:forEach items="${pool.comentarios }" var="comentario">
+			<div class="col-4">
+				<p>
+					<c:out value="${comentario.autor.nombre}">
+					</c:out>
+					<c:out value="${comentario.autor.apellido }">
+					</c:out>
 
+				</p>
+				<p>
+					Rating:
+					<c:out value="${comentario.rating }"></c:out>
+				</p>
+				<p>
+					Comment:
+					<c:out value="${comentario.comentario }"></c:out>
+				</p>
+
+			</div>
+			<hr />
+
+		</c:forEach>
+
+	</div>
+
+
+
+	</div>
+	F
 
 </body>
 </html>

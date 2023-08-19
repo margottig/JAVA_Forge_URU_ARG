@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -147,6 +148,43 @@ public class PoolController {
 		
 		
 		return "redirect:/pools/"+idPool;
+	}
+	
+	
+	// RUTAS DE EDICION POOL
+	@GetMapping("/host/pool/{idPool}")
+	public String showEditPool(@PathVariable("idPool")Long idPool,
+			Model viewModel, HttpSession sesion ) {
+		Long userLog = (Long) sesion.getAttribute("userID");
+		if (userLog == null) {
+			return "redirect:/guest/signin";
+		}
+		User usuario = userService.encontrarUserPorId(userLog);
+		WaterModel unaPool = waterService.encontrarPollPorId(idPool);
+		viewModel.addAttribute("usuario", usuario);
+		viewModel.addAttribute("pool", unaPool);
+		return "/host/editPool.jsp";
+	}
+	
+	@PutMapping("/host/pool/{id}")
+	public String editarPool(@PathVariable("id")Long idPool,
+			Model viewModel, HttpSession sesion, 
+			@Valid @ModelAttribute("pool") WaterModel pool, BindingResult resultado) {
+		Long userLog = (Long) sesion.getAttribute("userID");
+		User usuario = userService.encontrarUserPorId(userLog);
+		WaterModel unaPool = waterService.encontrarPollPorId(idPool);
+		if (userLog == null) {
+			return "redirect:/guest/signin";
+		}
+		if(resultado.hasErrors()) {
+			viewModel.addAttribute("usuario", usuario);
+			viewModel.addAttribute("pool", unaPool);
+			return "/host/editPool.jsp";
+		}
+		//Primero setamos rating despues actualizamos pool
+		pool.setRating(unaPool.getRating());
+		waterService.actualizarPool(pool);
+		return "redirect:/host/dashboard";
 	}
 
 }
